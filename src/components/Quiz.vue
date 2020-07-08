@@ -5,9 +5,9 @@
       alt="A castle at the top of a mountain in a gray day with thunder."
     >
     <h1 class="quiz-heading">How Well Do You Know the Harry Potter Movies?</h1>
-    <button class="quiz-button" @click="initQuizStage">Start Quiz</button>
+    <button class="quiz-button" v-if="stage==='welcome'" @click="initQuizStage">Start Quiz</button>
 
-    <ul>
+    <ul class="quiz-choices" v-if="stage==='quiz'">
       <li v-for="movie in movies" :key="movie">{{ movie }}</li>
     </ul>
   </div>
@@ -21,10 +21,19 @@ export default {
       required: true
     }
   },
-  name: "quiz",
+  data() {
+    return {
+      currentQuestionNumber: 0
+    };
+  },
+  computed: {
+    stage() {
+      return this.currentQuestionNumber === 0 ? "welcome" : "quiz";
+    }
+  },
   methods: {
     initQuizStage() {
-      console.log("Start the quiz...");
+      this.currentQuestionNumber = 1;
     }
   }
 };
